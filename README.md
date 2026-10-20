@@ -42,6 +42,9 @@ popmatch-ai-core/
 ├── client/
 │   ├── PopMatchAI.uproject              # Unreal Engine 5 project definition
 │   ├── Source/
+│   │   ├── Audio/
+│   │   │   ├── DynamicAudioSynthesizer.h
+│   │   │   └── DynamicAudioSynthesizer.cpp    # Edge neural vocoder voice synthesis
 │   │   ├── Gameplay/
 │   │   │   ├── CelebrityCrushMatchEngine.h
 │   │   │   └── CelebrityCrushMatchEngine.cpp   # Core C++ match-3 gameplay engine
@@ -66,7 +69,8 @@ popmatch-ai-core/
 │   │   └── referral_engine.go           # HMAC-SHA256 viral referral generator
 │   ├── matchmaking/
 │   │   ├── go.mod
-│   │   └── matchmaker.go                # Redis-backed Elo matchmaking service
+│   │   ├── matchmaker.go                # Redis-backed Elo matchmaking service
+│   │   └── protocol.proto               # Master gRPC Microservice Schemas
 │   └── monetization/
 │       ├── gacha_weights.json           # Core server-locked probability matrix
 │       └── banners/

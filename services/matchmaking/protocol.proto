@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package popmatch.ai.v1;
+
+option go_package = "services/matchmaking/v1;matchmakingv1";
+
+// Handles real-time player pooling and secure score validation loops
+service MatchmakingService {
+    rpc QueuePlayer (QueuePlayerRequest) returns (QueuePlayerResponse);
+    rpc StreamMoves (stream MoveTelemetryPacket) returns (MoveVerificationResponse);
+}
+
+message QueuePlayerRequest {
+    string user_id = 1;
+    double current_elo = 2;
+    int64 timestamp = 3;
+    string client_version = 4;
+}
+
+message QueuePlayerResponse {
+    enum Status {
+        STATUS_UNSPECIFIED = 0;
+        STATUS_QUEUED = 1;
+        STATUS_MATCH_FOUND = 2;
+        STATUS_FAILED = 3;
+    }
+    Status status = 1;
+    string game_session_id = 2;
+    string assigned_server_url = 3;
+    uint32 board_seed = 4;
+}
+
+message MoveTelemetryPacket {
+    string game_session_id = 1;
+    uint32 move_index = 2;
+    Coordinate from_coord = 3;
+    Coordinate to_coord = 4;
+    int64 delta_ms = 5;
+    string packet_signature = 6; // HMAC verification token
+}
+
+message Coordinate {
+    uint32 row = 1;
+    uint32 col = 2;
+}
+
+message MoveVerificationResponse {
+    uint32 verified_move_index = 1;
+    bool is_valid = 2;
+    uint64 current_score = 3;
+    uint32 combo_multiplier = 4;
+    string trigger_action_id = 5; // Flags client if a Cinematic Ordeal is approved
+}
