@@ -1,0 +1,45 @@
+{
+  "project_name": "PopMatch AI",
+  "version": "1.0.0-alpha",
+  "github_repository": "https://github.com/jetsontech/popmatch-ai-core",
+  "infrastructure_target": "aws-us-east-1",
+  "orchestration_layer": "Kubernetes (EKS v1.31)",
+  "database_clusters": {
+    "nosql_core": {
+      "provider": "DynamoDB",
+      "billing_mode": "PAY_PER_REQUEST",
+      "global_tables": ["us-east-1", "eu-west-1"],
+      "tables": [
+        "Users",
+        "PlayerProgression",
+        "CelebrityRoster",
+        "LiveOpsEvents"
+      ]
+    },
+    "cache_layer": {
+      "provider": "ElastiCache Redis",
+      "node_type": "cache.t4g.medium",
+      "cluster_mode": "enabled",
+      "ttl_seconds": 7200
+    },
+    "telemetry_layer": {
+      "provider": "Amazon Timestream",
+      "retention_memory_hours": 24,
+      "retention_magnetic_days": 365
+    }
+  },
+  "asset_pipeline": {
+    "cdn_provider": "AWS CloudFront",
+    "storage_bucket": "s3://popmatch-asset-pipeline-production",
+    "compression_format": "ASTC",
+    "metahuman_lod_targets": {
+      "grid_lod": 3,
+      "cinematic_lod": 0
+    }
+  },
+  "traffic_routing": {
+    "dns_provider": "Route 53",
+    "migration_strategy": "Blue-Green Cutover",
+    "health_check_interval_seconds": 5
+  }
+}

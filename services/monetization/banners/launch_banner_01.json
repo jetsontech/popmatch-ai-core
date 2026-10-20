@@ -1,0 +1,70 @@
+{
+  "banner_id": "bn_launch_pop_icons_v1",
+  "display_title": "Pop Icons Launch Week",
+  "activation_time": 1792670400,
+  "expiration_time": 1793275200,
+  "currency_type": "GoldBars",
+  "cost_per_pull": 10,
+  "cost_per_ten_pulls": 90,
+  "pity_rules": {
+    "hard_pity_threshold": 80,
+    "soft_pity_start": 70,
+    "current_banner_rate_boost": 0.50
+  },
+  "pool_manifest": [
+    {
+      "celebrity_id": "cel_taylor_swift_01",
+      "display_name": "Taylor Swift",
+      "tier": "ULTRA_RARE",
+      "base_drop_probability": 0.0075,
+      "is_featured": true,
+      "voice_line": "Karma is my boyfriend!",
+      "metahuman_lod_asset": "cdn://assets/mh/heads/v1/taylor_swift_l0.pak"
+    },
+    {
+      "celebrity_id": "cel_bruno_mars_01",
+      "display_name": "Bruno Mars",
+      "tier": "ULTRA_RARE",
+      "base_drop_probability": 0.0075,
+      "is_featured": true,
+      "voice_line": "Too hot to handle!",
+      "metahuman_lod_asset": "cdn://assets/mh/heads/v1/bruno_mars_l0.pak"
+    },
+    {
+      "celebrity_id": "cel_dua_lipa_01",
+      "display_name": "Dua Lipa",
+      "tier": "RARE",
+      "base_drop_probability": 0.0425,
+      "is_featured": false,
+      "voice_line": "Don't show up, don't come out!",
+      "metahuman_lod_asset": "cdn://assets/mh/heads/v1/dua_lipa_l1.pak"
+    },
+    {
+      "celebrity_id": "cel_the_weeknd_01",
+      "display_name": "The Weeknd",
+      "tier": "RARE",
+      "base_drop_probability": 0.0425,
+      "is_featured": false,
+      "voice_line": "Blinding lights on the red carpet!",
+      "metahuman_lod_asset": "cdn://assets/mh/heads/v1/the_weeknd_l1.pak"
+    },
+    {
+      "celebrity_id": "cel_drake_01",
+      "display_name": "Drake",
+      "tier": "RARE",
+      "base_drop_probability": 0.0425,
+      "is_featured": false,
+      "voice_line": "Started from the bottom!",
+      "metahuman_lod_asset": "cdn://assets/mh/heads/v1/drake_l1.pak"
+    },
+    {
+      "celebrity_id": "cel_beyonce_01",
+      "display_name": "Beyoncé",
+      "tier": "ULTRA_RARE",
+      "base_drop_probability": 0.0075,
+      "is_featured": true,
+      "voice_line": "Bow down!",
+      "metahuman_lod_asset": "cdn://assets/mh/heads/v1/beyonce_l0.pak"
+    }
+  ]
+}

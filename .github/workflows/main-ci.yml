@@ -1,0 +1,60 @@
+name: PopMatch AI Core CI
+
+on:
+  push:
+    branches: [ "main", "develop" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validate-backend:
+    name: Validate Backend Services
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Verify Matchmaker & Microservices Compilation
+        run: |
+          cd services/matchmaking
+          go mod tidy || true
+          go build -v ./...
+          cd ../marketing
+          go run referral_engine.go || true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Lint Ingest Pipeline
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8
+          flake8 services/asset-pipeline/ --count --select=E9,F63,F7,F82 --show-source --statistics
+
+  validate-architecture:
+    name: Validate Schemas & Architectural Configs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Validate JSON Schemas
+        run: |
+          python -c "
+          import json, glob
+          for f in glob.glob('**/*.json', recursive=True):
+              try:
+                  with open(f) as fp:
+                      json.load(fp)
+                  print(f'VALID: {f}')
+              except Exception as e:
+                  print(f'INVALID: {f}: {e}')
+                  exit(1)
+          "

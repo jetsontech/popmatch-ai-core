@@ -1,0 +1,23 @@
+{
+  "system_version": "2026.10.1",
+  "currency_mapping": {
+    "primary_cost_per_pull": 10,
+    "currency_type": "GoldBars",
+    "soft_currency_type": "CloutPoints"
+  },
+  "rates": {
+    "ultra_rare_tier": 0.015,
+    "rare_tier": 0.085,
+    "common_tier": 0.900
+  },
+  "pity_mechanic": {
+    "guaranteed_ultra_rare_at": 80,
+    "soft_pity_start_at": 70,
+    "soft_pity_rate_modifier": 0.05
+  },
+  "synergy_multipliers": {
+    "cast_match_bonus_multiplier": 2.5,
+    "era_match_bonus_multiplier": 1.25,
+    "rivalry_drama_multiplier": 3.0
+  }
+}

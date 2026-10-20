@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PopMatch AI — Frontier Tile-Matching Game Prototype</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="app" class="app-container">
+    <!-- Top Global Header -->
+    <header class="header-bar">
+      <div class="brand">
+        <div class="logo-badge">⚡ PM</div>
+        <div class="title-group">
+          <h1>PopMatch <span class="ai-pill">AI</span></h1>
+          <p class="subtitle">Next-Gen Tile-Matching & MetaHuman Reaction Engine</p>
+        </div>
+      </div>
+
+      <div class="currency-group">
+        <div class="currency-badge gold">
+          <span class="icon">🏆</span>
+          <span id="gold-balance">150</span>
+          <span class="label">Gold Bars</span>
+        </div>
+        <div class="currency-badge clout">
+          <span class="icon">✨</span>
+          <span id="clout-balance">4,200</span>
+          <span class="label">Clout</span>
+        </div>
+        <button id="btn-open-gacha" class="btn btn-primary glow-btn">
+          <span>🎁</span> Roster Gacha
+        </button>
+      </div>
+    </header>
+
+    <!-- Real-Time LiveOps Drama Alert Banner -->
+    <div id="drama-banner" class="drama-alert-bar">
+      <div class="pulse-dot"></div>
+      <div class="drama-text">
+        <strong>LIVEOPS DRAMA ALERT:</strong> 2-Hour Flash Event active! 
+        <span id="drama-headline">Taylor Swift vs Drake — 3.0x Match Synergy & Savage Side-Eye Reactions!</span>
+      </div>
+      <button id="btn-toggle-drama" class="btn btn-sm btn-ghost">Simulate News Spike</button>
+    </div>
+
+    <!-- Main Workspace Split -->
+    <main class="main-content">
+      <!-- Left Panel: Game Board & Play Area -->
+      <section class="game-section">
+        <div class="scoreboard-bar">
+          <div class="stat-card">
+            <span class="stat-label">SCORE</span>
+            <span id="current-score" class="stat-value">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">COMBO STREAK</span>
+            <span id="combo-streak" class="stat-value text-accent">0x</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">MOVES LEFT</span>
+            <span id="moves-left" class="stat-value">30</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">MULTIPLIER</span>
+            <span id="active-multiplier" class="stat-value text-gold">1.0x</span>
+          </div>
+        </div>
+
+        <!-- 8x8 Tile Matching Matrix -->
+        <div class="board-frame">
+          <div id="game-board" class="board-grid"></div>
+
+          <!-- Dynamic Camera Flash Overlay for Combos -->
+          <div id="flash-overlay" class="camera-flash-overlay"></div>
+
+          <!-- Cinematic Ordeal Overlay Modal -->
+          <div id="cinematic-overlay" class="cinematic-modal hidden">
+            <div class="cinematic-card">
+              <div class="cinematic-banner">🔥 CINEMATIC ORDEAL TRIGGERED!</div>
+              <div class="avatar-hero" id="cinematic-avatar">👑</div>
+              <h2 id="cinematic-title">Taylor Swift Power Move</h2>
+              <p id="cinematic-quote">"Karma is my boyfriend!"</p>
+              <div class="cinematic-stats">
+                <span>Combo: <b id="cinematic-combo-count">5 Tiles</b></span>
+                <span>Bonus: <b id="cinematic-bonus">+5,000 Pts</b></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="board-controls">
+          <button id="btn-reset-board" class="btn btn-secondary">🎲 Reseed Board</button>
+          <button id="btn-shuffle" class="btn btn-secondary">🔄 Shuffle Grid</button>
+          <div class="haptic-toggle">
+            <label class="switch">
+              <input type="checkbox" id="haptic-toggle" checked>
+              <span class="slider round"></span>
+            </label>
+            <span>Haptic & Audio Juice</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Panel: Telemetry, Roster, & Live Inspection -->
+      <aside class="sidebar-section">
+        <!-- Roster Preview Card -->
+        <div class="panel-card">
+          <div class="panel-header">
+            <h3>🌟 Active Celebrity Bench</h3>
+            <span class="badge-tag">6 Active Tiles</span>
+          </div>
+          <div class="roster-grid" id="roster-list">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+
+        <!-- State-Authoritative Telemetry & Anti-Cheat Monitor -->
+        <div class="panel-card telemetry-card">
+          <div class="panel-header">
+            <h3>🛡️ Deterministic Move Telemetry</h3>
+            <span class="badge-status online">AWS EKS Headless</span>
+          </div>
+          <p class="telemetry-desc">
+            Client swipes stream encrypted TLS 1.3 telemetry packets to the backend container for delta reconciliation.
+          </p>
+          <div class="telemetry-log" id="telemetry-log">
+            <div class="log-entry sys">[SYSTEM] Headless match validator ready. Seed: #42089</div>
+          </div>
+        </div>
+
+        <!-- System Architecture Diagnostics -->
+        <div class="panel-card specs-card">
+          <div class="panel-header">
+            <h3>⚙️ Engine Telemetry</h3>
+          </div>
+          <div class="specs-list">
+            <div class="spec-row">
+              <span>Rendering Pipeline</span>
+              <strong class="text-cyan">UE5 MetaHuman Dual-LOD</strong>
+            </div>
+            <div class="spec-row">
+              <span>Tick Frame Rate</span>
+              <strong class="text-accent">60 FPS (Locked LOD3)</strong>
+            </div>
+            <div class="spec-row">
+              <span>Cloud Latency</span>
+              <strong class="text-gold">14ms (Route 53 Edge)</strong>
+            </div>
+            <div class="spec-row">
+              <span>Anti-Cheat Status</span>
+              <strong class="text-green">Deterministic Zero-Trust</strong>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Gacha Modal Window -->
+    <div id="gacha-modal" class="modal-backdrop hidden">
+      <div class="gacha-dialog">
+        <button id="btn-close-gacha" class="btn-close">&times;</button>
+        <div class="gacha-header">
+          <span class="banner-tag">SPECIAL EVENT BANNER</span>
+          <h2>Pop Icons Launch Week</h2>
+          <p>Pull for featured Ultra-Rare MetaHuman avatars with voice lines and LOD 0 cinematic rigging!</p>
+        </div>
+
+        <div class="pity-bar-container">
+          <div class="pity-info">
+            <span>Guaranteed Ultra-Rare Pity Counter:</span>
+            <strong id="pity-counter-text">14 / 80</strong>
+          </div>
+          <div class="progress-track">
+            <div id="pity-progress-bar" class="progress-fill" style="width: 17.5%;"></div>
+          </div>
+          <small class="pity-caption">Soft pity begins at 70 pulls (+5% cumulative rate per pull).</small>
+        </div>
+
+        <div class="gacha-rates-badge">
+          <span>Rates: 🌟 Ultra-Rare 1.5% | ⭐ Rare 8.5% | 🔷 Common 90.0%</span>
+        </div>
+
+        <!-- Pull Result Stage -->
+        <div id="gacha-result-stage" class="gacha-result-stage">
+          <div class="placeholder-prompt">Tap a pull button below to test your luck!</div>
+        </div>
+
+        <div class="gacha-actions">
+          <button id="btn-pull-1" class="btn btn-secondary">
+            <span>Pull 1x</span>
+            <span class="cost">10 Gold Bars</span>
+          </button>
+          <button id="btn-pull-10" class="btn btn-primary glow-btn">
+            <span>Pull 10x (10% Discount)</span>
+            <span class="cost">90 Gold Bars</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
