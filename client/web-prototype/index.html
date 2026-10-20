@@ -11,77 +11,104 @@
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
-            background: #0b0f19; 
+            background: #070a13; 
             color: #f3f4f6; 
-            margin: 0;
-            padding: 1rem;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            overflow-x: hidden;
             background-image: 
-                radial-gradient(circle at 20% 20%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(217, 70, 239, 0.15) 0%, transparent 50%);
+                radial-gradient(circle at 15% 15%, rgba(6, 182, 212, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(217, 70, 239, 0.12) 0%, transparent 40%);
         }
         .glass-panel { 
-            background: rgba(17, 24, 39, 0.75); 
-            backdrop-filter: blur(14px); 
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(255, 255, 255, 0.08); 
+            background: rgba(13, 18, 33, 0.75); 
+            backdrop-filter: blur(16px); 
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.04); 
         }
         .grid-tile { 
-            transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.15s, box-shadow 0.15s; 
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
             user-select: none;
         }
-        .grid-tile:hover { 
-            transform: scale(1.05); 
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+        .grid-tile:hover {
+            transform: scale(1.04);
+            border-color: rgba(6, 182, 212, 0.4);
         }
-        .grid-tile:active {
-            transform: scale(0.95);
+        .grid-tile:active { 
+            transform: scale(0.92); 
         }
-        .grid-tile.tile-selected {
-            outline: 2px solid #06b6d4;
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
-            transform: scale(1.08);
+        .custom-glow { 
+            box-shadow: 0 0 25px -5px rgba(34, 211, 238, 0.2); 
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-center p-4 overflow-x-hidden">
+<body class="min-h-screen flex flex-col items-center justify-center p-4 selection:bg-cyan-500/30">
 
-    <!-- Top Status Bar & Trending Signal Banner -->
-    <div class="w-full max-w-md glass-panel rounded-2xl p-4 mb-4 flex justify-between items-center shadow-2xl">
-        <div>
-            <h1 class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-cyan-400 to-fuchsia-500 bg-clip-text text-transparent">POPMATCH AI</h1>
-            <p class="text-xs text-gray-400 mt-0.5">Live Event: <span class="text-fuchsia-400 font-semibold" id="event-banner">Drama Alert Active</span></p>
-        </div>
-        <div class="text-right">
-            <span class="text-xs text-gray-400 uppercase tracking-widest block">Score</span>
-            <span class="text-2xl font-black text-cyan-400" id="game-score">000,000</span>
-        </div>
-    </div>
+    <!-- Global App Shell Layout Container -->
+    <div class="w-full max-w-md flex flex-col gap-3">
 
-    <!-- Central Interactive Match Grid Canvas Sandbox -->
-    <div class="w-full max-w-md aspect-square glass-panel rounded-3xl p-3 relative shadow-2xl">
-        <div id="game-board-matrix" class="w-full h-full grid grid-cols-4 grid-rows-4 gap-3 bg-gray-950/50 rounded-2xl p-2 border border-white/5">
-            <!-- Dynamic Tiles will be programmatically generated here by game.js -->
+        <!-- MODULE A: Upper State Telemetry Dash -->
+        <div class="glass-panel custom-glow rounded-2xl p-4 flex justify-between items-center shadow-2xl">
+            <div>
+                <h1 class="text-2xl font-black tracking-tight bg-gradient-to-r from-cyan-400 via-indigo-400 to-fuchsia-500 bg-clip-text text-transparent">POPMATCH AI</h1>
+                <div class="flex items-center gap-1.5 mt-1">
+                    <span class="w-2 h-2 rounded-full bg-fuchsia-500 animate-pulse"></span>
+                    <p class="text-[11px] text-gray-400 uppercase tracking-widest font-semibold" id="live-event-ticker">LiveOps: Standard Pool</p>
+                </div>
+            </div>
+            <div class="text-right">
+                <span class="text-[10px] text-gray-500 uppercase tracking-widest block font-bold">Score Metric</span>
+                <span class="text-3xl font-black text-cyan-400 tracking-tight" id="score-display">000,000</span>
+            </div>
         </div>
-        
-        <!-- Camera Flash Overlay Effect Mask -->
-        <div id="dopamine-flash-mask" class="absolute inset-0 bg-white opacity-0 rounded-3xl pointer-events-none transition-opacity duration-75"></div>
-    </div>
 
-    <!-- Real-Time Metrics & Controls Dock -->
-    <div class="w-full max-w-md mt-4 grid grid-cols-2 gap-3">
-        <div class="glass-panel rounded-2xl p-3 text-center">
-            <span class="text-xs text-gray-400 block">Pity Progress</span>
-            <span class="text-lg font-bold text-amber-400" id="pity-counter">0 / 80</span>
+        <!-- MODULE B: Real-Time LiveOps Control & Network Sync Panel -->
+        <div class="glass-panel rounded-2xl p-3 grid grid-cols-2 gap-2 text-xs">
+            <button onclick="toggleLiveOpsDramaEvent()" class="p-2.5 rounded-xl font-bold tracking-wide transition-all bg-gray-950/40 hover:bg-fuchsia-950/20 text-fuchsia-400 border border-fuchsia-500/20 active:scale-95 text-center">
+                💥 Trigger Flash Drama
+            </button>
+            <button onclick="simulateMultiplayerQueue()" class="p-2.5 rounded-xl font-bold tracking-wide transition-all bg-gray-950/40 hover:bg-cyan-950/20 text-cyan-400 border border-cyan-500/20 active:scale-95 text-center" id="btn-matchmaker">
+                ⚔️ Enter Match Queue
+            </button>
         </div>
-        <button id="btn-gacha-pull" onclick="triggerGachaPull()" class="glass-panel rounded-2xl p-3 text-center font-bold tracking-wide hover:bg-white/5 active:scale-95 transition-all text-fuchsia-400 border border-fuchsia-500/20">
-            ✨ Pull Gacha
-        </button>
+
+        <!-- MODULE C: Core Gameplay Interaction Engine Grid -->
+        <div class="w-full aspect-square glass-panel rounded-3xl p-3.5 relative shadow-2xl overflow-hidden border border-white/5">
+            <div id="game-board-matrix" class="w-full h-full grid grid-cols-4 grid-rows-4 gap-3 bg-gray-950/60 rounded-2xl p-2.5 border border-white/5 relative z-10">
+                <!-- Programmatically generated via game.js -->
+            </div>
+
+            <!-- Dopamine Flash Mask Overlay Framework -->
+            <div id="dopamine-flash" class="absolute inset-0 bg-white opacity-0 pointer-events-none transition-opacity duration-75 z-20 rounded-3xl"></div>
+
+            <!-- Cinematic Ordeal Overlay Viewport Canvas -->
+            <div id="cinematic-viewport" class="absolute inset-0 bg-gradient-to-t from-black via-gray-950 to-indigo-950/40 flex flex-col items-center justify-center p-6 opacity-0 pointer-events-none transition-all duration-300 transform scale-105 z-30 rounded-3xl">
+                <div class="text-7xl mb-4 animate-bounce" id="cinematic-actor">🎬</div>
+                <h2 class="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500 tracking-tight text-center uppercase" id="cinematic-title">CINEMATIC ORDEAL</h2>
+                <p class="text-sm text-gray-300 mt-2 text-center font-medium italic max-w-xs px-4" id="cinematic-subtitle">"Script Line Generating..."</p>
+                <div class="w-24 h-1 bg-gradient-to-r from-transparent via-amber-400 to-transparent mt-4 rounded-full"></div>
+            </div>
+        </div>
+
+        <!-- MODULE D: Economy Loop & Progression Inventory Status -->
+        <div class="grid grid-cols-3 gap-2">
+            <div class="glass-panel rounded-xl p-2.5 text-center">
+                <span class="text-[9px] text-gray-500 uppercase tracking-widest font-bold block">Gold Bars</span>
+                <span class="text-sm font-black text-amber-400" id="balance-gold">150</span>
+            </div>
+            <div class="glass-panel rounded-xl p-2.5 text-center">
+                <span class="text-[9px] text-gray-500 uppercase tracking-widest font-bold block">Pity Tracking</span>
+                <span class="text-sm font-black text-cyan-400" id="pity-display">0 / 80</span>
+            </div>
+            <button onclick="executeSecureGachaPull()" class="glass-panel rounded-xl p-2.5 text-center font-black tracking-wide text-xs hover:bg-gradient-to-r hover:from-cyan-500/10 hover:to-fuchsia-500/10 text-fuchsia-400 border border-fuchsia-500/20 active:scale-95 transition-all">
+                ✨ Pull Gacha
+            </button>
+        </div>
+
+        <!-- MODULE E: Viral Referral Cryptographic Shared SDK Links -->
+        <div class="glass-panel rounded-2xl p-3 flex justify-between items-center text-xs">
+            <span class="text-gray-400 font-medium">Invite Link: <span class="text-[10px] text-gray-500 font-mono" id="referral-preview">Unsigned Token</span></span>
+            <button onclick="generateSecureReferralToken()" class="px-3 py-1.5 rounded-xl font-bold bg-gray-950/60 hover:bg-white/5 border border-white/5 active:scale-95 transition-all text-gray-300">
+                🔗 Copy Link
+            </button>
+        </div>
     </div>
 
     <script src="game.js"></script>
