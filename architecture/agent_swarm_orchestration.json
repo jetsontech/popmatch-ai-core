@@ -1,0 +1,25 @@
+{
+  "swarm_version": "2026.10.2",
+  "orchestrator_node": "Principal-Architect-Agent-v4",
+  "active_agent_workers": {
+    "ue5_client_agent": {
+      "focus_directory": "client/Source/Gameplay/",
+      "permitted_actions": ["OptimizeRefactor", "LODScalingAdjustment"],
+      "max_cpu_cores": 4
+    },
+    "go_backend_agent": {
+      "focus_directory": "services/matchmaking/",
+      "permitted_actions": ["PatchSecurity", "OptimizeRedisQueries"],
+      "max_cpu_cores": 2
+    },
+    "tech_art_agent": {
+      "focus_directory": "services/asset-pipeline/",
+      "permitted_actions": ["AutomatedRigBaking", "CDNPatchDeploy"],
+      "max_cpu_cores": 8
+    }
+  },
+  "verification_gateways": {
+    "require_peer_review_agent_approval": true,
+    "require_headless_simulation_pass": true
+  }
+}

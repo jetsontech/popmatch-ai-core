@@ -36,6 +36,7 @@ popmatch-ai-core/
 │   └── workflows/
 │       └── main-ci.yml                  # Automated Go, Python, and JSON Schema CI
 ├── architecture/
+│   ├── agent_swarm_orchestration.json   # Autonomous AI Engineering Swarm Topology
 │   ├── deployment_config.json           # AWS EKS, DynamoDB, Redis, & Route 53 setup
 │   └── SYSTEM_ARCHITECTURE.md           # Master technical engineering whitepaper
 ├── client/
